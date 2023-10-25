@@ -1,0 +1,45 @@
+{
+    "os": "macOS-10.16-x86_64-i386-64bit",
+    "python": "3.10.12",
+    "heartbeatAt": "2023-10-24T00:25:23.523022",
+    "startedAt": "2023-10-24T00:25:22.838780",
+    "docker": null,
+    "cuda": null,
+    "args": [],
+    "state": "running",
+    "program": "/Users/zzzanghun/git/AI_Application_Practice/07.Olympic/f_ppo_train.py",
+    "codePathLocal": "f_ppo_train.py",
+    "codePath": "07.Olympic/f_ppo_train.py",
+    "git": {
+        "remote": "https://github.com/JJBong/AI_Application_Practice.git",
+        "commit": "603fbab7fbda1141a1c757fe0c30a3158686b397"
+    },
+    "email": "wlckd5660@gmail.com",
+    "root": "/Users/zzzanghun/git/AI_Application_Practice",
+    "host": "jichanghun-ui-MacBookPro.local",
+    "username": "zzzanghun",
+    "executable": "/Users/zzzanghun/anaconda3/envs/AI_lecture/bin/python",
+    "cpu_count": 8,
+    "cpu_count_logical": 16,
+    "cpu_freq": {
+        "current": 2400,
+        "min": 2400,
+        "max": 2400
+    },
+    "cpu_freq_per_core": [
+        {
+            "current": 2400,
+            "min": 2400,
+            "max": 2400
+        }
+    ],
+    "disk": {
+        "/": {
+            "total": 931.546989440918,
+            "used": 19.785991668701172
+        }
+    },
+    "memory": {
+        "total": 32.0
+    }
+}

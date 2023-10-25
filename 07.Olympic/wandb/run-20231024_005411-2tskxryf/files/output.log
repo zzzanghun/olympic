@@ -1,0 +1,5 @@
+/Users/zzzanghun/git/AI_Application_Practice/07.Olympic/b_ppo.py:117: UserWarning: Creating a tensor from a list of numpy.ndarrays is extremely slow. Please consider converting the list to a single numpy.ndarray with numpy.array() before converting to a tensor. (Triggered internally at /Users/runner/work/_temp/anaconda/conda-bld/pytorch_1682343679700/work/torch/csrc/utils/tensor_new.cpp:248.)
+  state = torch.FloatTensor(state).to(self.device)
+[Episode  10, Steps  4,000] Episode Reward:  -165.996, Elapsed Time: 00:01:03
+[Episode  20, Steps  7,633] Episode Reward:  -167.293, Elapsed Time: 00:03:01
+[Episode  30, Steps 11,633] Episode Reward:  -165.065, Elapsed Time: 00:05:18

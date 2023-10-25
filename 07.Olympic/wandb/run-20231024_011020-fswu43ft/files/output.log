@@ -1,0 +1,40 @@
+Traceback (most recent call last):
+  File "/Users/zzzanghun/git/AI_Application_Practice/07.Olympic/f_ppo_train.py", line 83, in <module>
+    main(args, args.is_evaluate)
+  File "/Users/zzzanghun/git/AI_Application_Practice/07.Olympic/f_ppo_train.py", line 49, in main
+    agent.train()
+  File "/Users/zzzanghun/git/AI_Application_Practice/07.Olympic/b_ppo.py", line 181, in train
+    next_state, reward, done = self._step(action)
+  File "/Users/zzzanghun/git/AI_Application_Practice/07.Olympic/b_ppo.py", line 141, in _step
+    next_state, reward, terminated, truncated, _ = self.env.step(action)
+  File "/Users/zzzanghun/git/AI_Application_Practice/07.Olympic/d_wrappers.py", line 127, in step
+    self.render()
+  File "/Users/zzzanghun/git/AI_Application_Practice/07.Olympic/d_wrappers.py", line 242, in render
+    self.env.env_core.render()
+  File "/Users/zzzanghun/git/AI_Application_Practice/termproject_olympic/olympics_engine/AI_olympics.py", line 176, in render
+    self.current_game.render()
+  File "/Users/zzzanghun/git/AI_Application_Practice/termproject_olympic/olympics_engine/scenario/running_competition.py", line 143, in render
+    self.viewer.set_mode()
+  File "/Users/zzzanghun/git/AI_Application_Practice/termproject_olympic/olympics_engine/viewer.py", line 26, in set_mode
+    self.background = pygame.display.set_mode(self.WIN_SIZE)
+pygame.error: No hardware accelerated renderers available
+Traceback (most recent call last):
+  File "/Users/zzzanghun/git/AI_Application_Practice/07.Olympic/f_ppo_train.py", line 83, in <module>
+    main(args, args.is_evaluate)
+  File "/Users/zzzanghun/git/AI_Application_Practice/07.Olympic/f_ppo_train.py", line 49, in main
+    agent.train()
+  File "/Users/zzzanghun/git/AI_Application_Practice/07.Olympic/b_ppo.py", line 181, in train
+    next_state, reward, done = self._step(action)
+  File "/Users/zzzanghun/git/AI_Application_Practice/07.Olympic/b_ppo.py", line 141, in _step
+    next_state, reward, terminated, truncated, _ = self.env.step(action)
+  File "/Users/zzzanghun/git/AI_Application_Practice/07.Olympic/d_wrappers.py", line 127, in step
+    self.render()
+  File "/Users/zzzanghun/git/AI_Application_Practice/07.Olympic/d_wrappers.py", line 242, in render
+    self.env.env_core.render()
+  File "/Users/zzzanghun/git/AI_Application_Practice/termproject_olympic/olympics_engine/AI_olympics.py", line 176, in render
+    self.current_game.render()
+  File "/Users/zzzanghun/git/AI_Application_Practice/termproject_olympic/olympics_engine/scenario/running_competition.py", line 143, in render
+    self.viewer.set_mode()
+  File "/Users/zzzanghun/git/AI_Application_Practice/termproject_olympic/olympics_engine/viewer.py", line 26, in set_mode
+    self.background = pygame.display.set_mode(self.WIN_SIZE)
+pygame.error: No hardware accelerated renderers available

@@ -1,0 +1,26 @@
+
+self.game_name = 'olympics-integrated', self.current_game.game_name = 'curling-competition'
+Traceback (most recent call last):
+  File "/Users/zzzanghun/git/AI_Application_Practice/07.Olympic/f_ppo_train.py", line 88, in <module>
+    main(args, args.is_evaluate)
+  File "/Users/zzzanghun/git/AI_Application_Practice/07.Olympic/f_ppo_train.py", line 52, in main
+    agent.train()
+  File "/Users/zzzanghun/git/AI_Application_Practice/07.Olympic/b_ppo.py", line 188, in train
+    next_state, reward, done = self._step(action)
+  File "/Users/zzzanghun/git/AI_Application_Practice/07.Olympic/b_ppo.py", line 148, in _step
+    next_state, reward, terminated, truncated, _ = self.env.step(action)
+  File "/Users/zzzanghun/git/AI_Application_Practice/07.Olympic/d_wrappers.py", line 220, in step
+    raise ValueError()
+ValueError
+Traceback (most recent call last):
+  File "/Users/zzzanghun/git/AI_Application_Practice/07.Olympic/f_ppo_train.py", line 88, in <module>
+    main(args, args.is_evaluate)
+  File "/Users/zzzanghun/git/AI_Application_Practice/07.Olympic/f_ppo_train.py", line 52, in main
+    agent.train()
+  File "/Users/zzzanghun/git/AI_Application_Practice/07.Olympic/b_ppo.py", line 188, in train
+    next_state, reward, done = self._step(action)
+  File "/Users/zzzanghun/git/AI_Application_Practice/07.Olympic/b_ppo.py", line 148, in _step
+    next_state, reward, terminated, truncated, _ = self.env.step(action)
+  File "/Users/zzzanghun/git/AI_Application_Practice/07.Olympic/d_wrappers.py", line 220, in step
+    raise ValueError()
+ValueError

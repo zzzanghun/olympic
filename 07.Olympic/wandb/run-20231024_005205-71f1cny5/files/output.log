@@ -1,0 +1,38 @@
+/Users/zzzanghun/git/AI_Application_Practice/07.Olympic/b_ppo.py:117: UserWarning: Creating a tensor from a list of numpy.ndarrays is extremely slow. Please consider converting the list to a single numpy.ndarray with numpy.array() before converting to a tensor. (Triggered internally at /Users/runner/work/_temp/anaconda/conda-bld/pytorch_1682343679700/work/torch/csrc/utils/tensor_new.cpp:248.)
+  state = torch.FloatTensor(state).to(self.device)
+[Episode  10, Steps  4,000] Episode Reward:  -186.370, Elapsed Time: 00:01:16
+Traceback (most recent call last):
+  File "/Users/zzzanghun/git/AI_Application_Practice/07.Olympic/f_ppo_train.py", line 83, in <module>
+    main(args, args.is_evaluate)
+  File "/Users/zzzanghun/git/AI_Application_Practice/07.Olympic/f_ppo_train.py", line 49, in main
+    agent.train()
+  File "/Users/zzzanghun/git/AI_Application_Practice/07.Olympic/b_ppo.py", line 219, in train
+    self._update_weights()
+  File "/Users/zzzanghun/git/AI_Application_Practice/07.Olympic/b_ppo.py", line 279, in _update_weights
+    actor_loss_wo_entropy = -torch.mean(torch.min(loss, clipped_loss))
+  File "/Users/zzzanghun/anaconda3/envs/AI_lecture/lib/python3.10/site-packages/torch/fx/traceback.py", line 41, in format_stack
+    return traceback.format_list(traceback.extract_stack()[:-1])
+  File "/Users/zzzanghun/anaconda3/envs/AI_lecture/lib/python3.10/traceback.py", line 227, in extract_stack
+    stack = StackSummary.extract(walk_stack(f), limit=limit)
+  File "/Users/zzzanghun/anaconda3/envs/AI_lecture/lib/python3.10/traceback.py", line 379, in extract
+    linecache.checkcache(filename)
+  File "/Users/zzzanghun/anaconda3/envs/AI_lecture/lib/python3.10/linecache.py", line 72, in checkcache
+    stat = os.stat(fullname)
+KeyboardInterrupt
+Traceback (most recent call last):
+  File "/Users/zzzanghun/git/AI_Application_Practice/07.Olympic/f_ppo_train.py", line 83, in <module>
+    main(args, args.is_evaluate)
+  File "/Users/zzzanghun/git/AI_Application_Practice/07.Olympic/f_ppo_train.py", line 49, in main
+    agent.train()
+  File "/Users/zzzanghun/git/AI_Application_Practice/07.Olympic/b_ppo.py", line 219, in train
+    self._update_weights()
+  File "/Users/zzzanghun/git/AI_Application_Practice/07.Olympic/b_ppo.py", line 279, in _update_weights
+    actor_loss_wo_entropy = -torch.mean(torch.min(loss, clipped_loss))
+  File "/Users/zzzanghun/anaconda3/envs/AI_lecture/lib/python3.10/site-packages/torch/fx/traceback.py", line 41, in format_stack
+    return traceback.format_list(traceback.extract_stack()[:-1])
+  File "/Users/zzzanghun/anaconda3/envs/AI_lecture/lib/python3.10/traceback.py", line 227, in extract_stack
+    stack = StackSummary.extract(walk_stack(f), limit=limit)
+  File "/Users/zzzanghun/anaconda3/envs/AI_lecture/lib/python3.10/traceback.py", line 379, in extract
+    linecache.checkcache(filename)
+  File "/Users/zzzanghun/anaconda3/envs/AI_lecture/lib/python3.10/linecache.py", line 72, in checkcache
+    stat = os.stat(fullname)

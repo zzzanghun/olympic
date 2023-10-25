@@ -1,0 +1,23 @@
+/Users/zzzanghun/git/AI_Application_Practice/07.Olympic/b_ppo.py:117: UserWarning: Creating a tensor from a list of numpy.ndarrays is extremely slow. Please consider converting the list to a single numpy.ndarray with numpy.array() before converting to a tensor. (Triggered internally at /Users/runner/work/_temp/anaconda/conda-bld/pytorch_1682343679700/work/torch/csrc/utils/tensor_new.cpp:248.)
+  state = torch.FloatTensor(state).to(self.device)
+[Episode  10, Steps  3,408] Episode Reward:  -172.486, Elapsed Time: 00:00:21
+Traceback (most recent call last):
+  File "/Users/zzzanghun/git/AI_Application_Practice/07.Olympic/f_ppo_train.py", line 83, in <module>
+    main(args, args.is_evaluate)
+  File "/Users/zzzanghun/git/AI_Application_Practice/07.Olympic/f_ppo_train.py", line 49, in main
+    agent.train()
+  File "/Users/zzzanghun/git/AI_Application_Practice/07.Olympic/b_ppo.py", line 208, in train
+    self.log_wandb()
+  File "/Users/zzzanghun/git/AI_Application_Practice/07.Olympic/b_ppo.py", line 372, in log_wandb
+    "Train/ratio": sum(self.ratio_list) / len(self.ratio_list),
+ZeroDivisionError: division by zero
+Traceback (most recent call last):
+  File "/Users/zzzanghun/git/AI_Application_Practice/07.Olympic/f_ppo_train.py", line 83, in <module>
+    main(args, args.is_evaluate)
+  File "/Users/zzzanghun/git/AI_Application_Practice/07.Olympic/f_ppo_train.py", line 49, in main
+    agent.train()
+  File "/Users/zzzanghun/git/AI_Application_Practice/07.Olympic/b_ppo.py", line 208, in train
+    self.log_wandb()
+  File "/Users/zzzanghun/git/AI_Application_Practice/07.Olympic/b_ppo.py", line 372, in log_wandb
+    "Train/ratio": sum(self.ratio_list) / len(self.ratio_list),
+ZeroDivisionError: division by zero

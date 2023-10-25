@@ -1,0 +1,12 @@
+
+self.game_name = 'olympics-integrated', self.current_game.game_name = 'wrestling'
+final R =  [-10, -10]
+final R =  [-10, -10]
+self.game_name = 'olympics-integrated', self.current_game.game_name = 'billiard'
+final R =  [-10, -20]
+final R =  [-10, -20]
+self.game_name = 'olympics-integrated', self.current_game.game_name = 'football'
+final R =  [-9, 0]
+final R =  [-9, 0]
+self.game_name = 'olympics-integrated', self.current_game.game_name = 'curling-competition'
+It's solved!
