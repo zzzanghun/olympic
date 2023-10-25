@@ -128,8 +128,8 @@ class PPOAgent(object):
         self.ratio_list = deque(maxlen=30)
 
         if self.wandb_use and not self.is_evaluate:
-            now_time = datetime.now().astimezone().strftime('%Y-%m-%d_%H-%M-%S')
-            wandb_name = f"{args.env_name}_{now_time}"
+            now_time = datetime.now()
+            wandb_name = f"{args.env_name}_{now_time.month}-{now_time.day}-{now_time.hour}-{now_time.minute}-{now_time.second}_{args.frame_skipping}_{args.solved_reward}"
             self.wandb = wandb.init(
                 project=f"{args.env_name}",
                 name=wandb_name,
