@@ -1,3 +1,4 @@
+import os
 import time
 import torch
 import torch.optim as optim
@@ -8,11 +9,12 @@ import numpy as np
 
 from a_actor_critic import CnnEncoder, ContinuousActor, Critic, init_weights, Memory
 from c_ppo_utils import get_gae, trajectories_data_generator
-        
+
 import wandb
 from datetime import datetime
 from collections import deque
 from copy import deepcopy
+
 
 class PPOAgent(object):
     """PPOAgent.
@@ -40,12 +42,14 @@ class PPOAgent(object):
         plot_interval: plot history log every plot_interval rollouts.
         path2save_train_history: path to save training history logs.
         """
+
     def __init__(self, make_env, args):
         """
         Initialization.
         """
         self.device = args.device
         self.env_name = args.env_name
+        self.env = make_env(args.env_name, config=args)
         print("device:", self.device)
         # self.env = make_env(args.env_name, args)
 
@@ -55,7 +59,7 @@ class PPOAgent(object):
         self.entropy_coef = args.entropy_coef
         self.epsilon = args.epsilon
         self.value_range = args.value_range
-        
+
         # other hyperparameters
         self.rollout_len = args.rollout_len
         self.total_rollouts = args.total_rollouts
@@ -98,14 +102,9 @@ class PPOAgent(object):
                 f"{self.path2save_train_history}/{self.env_name}/{args.load_model_time}/encoder.pth",
                 map_location=self.device))
 
-        # actor target for smart competition
-        self.smart_competition = args.smart_competition
-        if self.smart_competition:
-            self.actor_target = deepcopy(self.actor)
-            self.target_update_interval = args.target_update_interval
-            self.env = make_env(args.env_name, agent=self.actor_target, config=args)
-        else:
-            self.env = make_env(args.env_name, config=args)
+            print("COMPLETE MODEL LOAD!!!!")
+
+        self.load_model_time = args.load_model_time
 
         # wandb
         self.wandb_use = args.wandb_use
@@ -130,7 +129,7 @@ class PPOAgent(object):
 
     def _get_action(self, state: np.ndarray) -> float:
         """
-        Get action from actor, and if not test -  
+        Get action from actor, and if not test -
         get state value from critic, collect elements of trajectory.
         """
         state = np.array(state)
@@ -142,7 +141,7 @@ class PPOAgent(object):
 
         if not self.is_evaluate:
             value = self.critic(state)
-           
+
             # collect elements of trajectory
             self.memory.states.append(state)
             self.memory.actions.append(action)
@@ -150,13 +149,13 @@ class PPOAgent(object):
             self.memory.values.append(value)
 
         return list(action.detach().cpu().numpy()).pop()
-            
+
     def _step(self, action: float):
         """
         Make action in enviroment chosen by current policy,
         if not evaluate - collect elements of trajectory.
         """
-        #print(action)
+        # print(action)
         next_state, reward, terminated, truncated, _ = self.env.step(action)
         if any([terminated, truncated]):
             done = True
@@ -169,7 +168,7 @@ class PPOAgent(object):
         done = np.reshape(done, (1, -1))
 
         if not self.is_evaluate:
-            # convert np.ndarray return from enviroment to torch tensor. 
+            # convert np.ndarray return from enviroment to torch tensor.
             # collect elements of trajectory.
             reward = np.array(reward)
             done_memory = np.array(1 - done)
@@ -271,16 +270,15 @@ class PPOAgent(object):
         advantages = returns - values[:-1]
 
         for state, action, return_, old_log_prob, old_value, advantage in trajectories_data_generator(
-            states=states,
-            actions=actions,
-            returns=returns,
-            log_probs=log_probs,
-            values=values,
-            advantages=advantages,
-            batch_size=self.batch_size,
-            num_epochs=self.num_epochs,
-            ):
-
+                states=states,
+                actions=actions,
+                returns=returns,
+                log_probs=log_probs,
+                values=values,
+                advantages=advantages,
+                batch_size=self.batch_size,
+                num_epochs=self.num_epochs,
+        ):
             # compute ratio (pi_theta / pi_theta__old)
             _, dist = self.actor(state)
             cur_log_prob = dist.log_prob(action)
@@ -292,14 +290,14 @@ class PPOAgent(object):
             entropy = dist.entropy().mean()
 
             # compute actor loss
-            loss =  advantage * ratio
+            loss = advantage * ratio
             clipped_loss = (
-                torch.clamp(ratio, 1. - self.epsilon, 1. + self.epsilon)
-                 * advantage
-                )
+                    torch.clamp(ratio, 1. - self.epsilon, 1. + self.epsilon)
+                    * advantage
+            )
             actor_loss = (
-                -torch.mean(torch.min(loss, clipped_loss))
-                - entropy * self.entropy_coef)
+                    -torch.mean(torch.min(loss, clipped_loss))
+                    - entropy * self.entropy_coef)
 
             actor_loss_wo_entropy = -torch.mean(torch.min(loss, clipped_loss))
             entropy_loss = -torch.mean(entropy * self.entropy_coef)
@@ -353,7 +351,7 @@ class PPOAgent(object):
     def _plot_train_history(self):
         data = [self.scores, self.actor_loss_history, self.critic_loss_history]
         labels = [f"score {np.mean(self.scores[-10:])}",
-                  f"actor loss {np.mean(self.actor_loss_history[-10:])}", 
+                  f"actor loss {np.mean(self.actor_loss_history[-10:])}",
                   f"critic loss {np.mean(self.critic_loss_history[-10:])}",
                   ]
         clear_output(True)
@@ -369,21 +367,26 @@ class PPOAgent(object):
     def _save_train_history(self):
         """writing model weights and training logs to files."""
         data_time = datetime.now()
+        if not os.path.exists(
+                f"{self.path2save_train_history}/{self.env_name}/{data_time.month}_{data_time.day}_{data_time.hour}_{data_time.minute}"):
+            os.makedirs(
+                f"{self.path2save_train_history}/{self.env_name}/{data_time.month}_{data_time.day}_{data_time.hour}_{data_time.minute}")
+
         torch.save(self.actor.state_dict(),
-                   f"{self.path2save_train_history}/{self.env_name}/{data_time.month}_{data_time.day}_{data_time.hour}/actor.pth")
+                   f"{self.path2save_train_history}/{self.env_name}/{data_time.month}_{data_time.day}_{data_time.hour}_{data_time.minute}/actor.pth")
         torch.save(self.critic.state_dict(),
-                   f"{self.path2save_train_history}/{self.env_name}/{data_time.month}_{data_time.day}_{data_time.hour}/critic.pth")
+                   f"{self.path2save_train_history}/{self.env_name}/{data_time.month}_{data_time.day}_{data_time.hour}_{data_time.minute}/critic.pth")
         torch.save(self.encoder.state_dict(),
-                   f"{self.path2save_train_history}/{self.env_name}/{data_time.month}_{data_time.day}_{data_time.hour}/encoder.pth")
-        
-        pd.DataFrame({"actor loss": self.actor_loss_history, 
+                   f"{self.path2save_train_history}/{self.env_name}/{data_time.month}_{data_time.day}_{data_time.hour}_{data_time.minute}/encoder.pth")
+
+        pd.DataFrame({"actor loss": self.actor_loss_history,
                       "critic loss": self.critic_loss_history}
                      ).to_csv(f"{self.path2save_train_history}/loss_logs.csv")
 
         pd.DataFrame(
             data=self.scores, columns=["scores"]
-            ).to_csv(f"{self.path2save_train_history}/score_logs.csv")
-        
+        ).to_csv(f"{self.path2save_train_history}/score_logs.csv")
+
     def evaluate(self):
         self.is_evaluate = True
 
@@ -402,8 +405,15 @@ class PPOAgent(object):
                              actor_weights_path: str,
                              critic_weights_path: str):
 
-        self.actor.load_state_dict(torch.load(actor_weights_path))
-        self.critic.load_state_dict(torch.load(critic_weights_path))
+        self.actor.load_state_dict(torch.load(
+            f"{self.path2save_train_history}/{self.env_name}/{self.load_model_time}/actor.pth",
+            map_location=self.device))
+        self.critic.load_state_dict(torch.load(
+            f"{self.path2save_train_history}/{self.env_name}/{self.load_model_time}/critic.pth",
+            map_location=self.device))
+        self.encoder.load_state_dict(torch.load(
+            f"{self.path2save_train_history}/{self.env_name}/{self.load_model_time}/encoder.pth",
+            map_location=self.device))
         print("Predtrain models loaded")
 
     def log_wandb(self):
@@ -419,4 +429,4 @@ class PPOAgent(object):
         }
 
         wandb.log(log_dict)
-        
+
