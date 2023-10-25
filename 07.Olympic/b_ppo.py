@@ -106,6 +106,15 @@ class PPOAgent(object):
 
         self.load_model_time = args.load_model_time
 
+        # actor target for smart competition
+        self.smart_competition = args.smart_competition
+        if self.smart_competition:
+            self.actor_target = deepcopy(self.actor)
+            self.target_update_interval = args.target_update_interval
+            self.env = make_env(args.env_name, agent=self.actor_target, config=args)
+        else:
+            self.env = make_env(args.env_name, config=args)
+
         # wandb
         self.wandb_use = args.wandb_use
         self.train_flag = False
